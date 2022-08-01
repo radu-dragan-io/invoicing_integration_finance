@@ -8,7 +8,7 @@
       "clusters": [
         {
           "account": "support-dev",
-          "application": "invoicing_integration_finance",
+          "application": "invoicing_integrations_finance",
           "associatePublicIpAddress": false,
           "availabilityZones": {
             "us-east-2": [
