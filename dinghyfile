@@ -8,7 +8,7 @@
       "clusters": [
         {
           "account": "support-dev",
-          "application": "snake_eyes",
+          "application": "invoicing_integration_finance",
           "associatePublicIpAddress": false,
           "availabilityZones": {
             "us-east-2": [
