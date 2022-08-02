@@ -48,7 +48,7 @@
                     }
                     ],
                     "moniker": {
-                    "app": "invoicing-feature-integration"
+                    "app": "invoicing_feature_integration"
                     },
                     "name": "Deploy (Manifest)",
                     "namespaceOverride": "",
