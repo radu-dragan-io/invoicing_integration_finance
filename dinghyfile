@@ -1,100 +1,103 @@
 {
-  "keepWaitingPipelines": false,
-  "lastModifiedBy": "anonymous",
-  "limitConcurrent": true,
-  "schema": "1",
-  "spelEvaluator": "v4",
-  "stages": [
-    {
-      "account": "radu-spinnaker",
-      "cloudProvider": "kubernetes",
-      "manifests": [
+    "application": "invoicing", # Global variable
+    "pipelines": [
         {
-          "apiVersion": "apps/v1",
-          "kind": "Deployment",
-          "metadata": {
-            "name": "nginx-deployment"
-          },
-          "spec": {
-            "replicas": 2,
-            "selector": {
-              "matchLabels": {
-                "app": "nginx"
-              }
-            },
-            "template": {
-              "metadata": {
-                "labels": {
-                  "app": "nginx"
+            "application": "invoicing", # Application where pipeline will exist
+            "keepWaitingPipelines": false, # Pipeline settings
+            "limitConcurrent": true, # Pipeline settings
+            "name": "Dinghy Pipeline", # Name of pipeline
+            "stages": [ # Stages the pipeline will have
+                {
+                    "account": "radu-spinnaker",
+                    "cloudProvider": "kubernetes",
+                    "manifests": [
+                    {
+                        "apiVersion": "apps/v1",
+                        "kind": "Deployment",
+                        "metadata": {
+                        "name": "nginx-deployment"
+                        },
+                        "spec": {
+                        "replicas": 2,
+                        "selector": {
+                            "matchLabels": {
+                            "app": "nginx"
+                            }
+                        },
+                        "template": {
+                            "metadata": {
+                            "labels": {
+                                "app": "nginx"
+                            }
+                            },
+                            "spec": {
+                            "containers": [
+                                {
+                                "image": "nginx:1.14.2",
+                                "name": "nginx",
+                                "ports": [
+                                    {
+                                    "containerPort": 80
+                                    }
+                                ]
+                                }
+                            ]
+                            }
+                        }
+                        }
+                    }
+                    ],
+                    "moniker": {
+                    "app": "invoicing"
+                    },
+                    "name": "Deploy (Manifest)",
+                    "namespaceOverride": "",
+                    "refId": "1",
+                    "requisiteStageRefIds": [],
+                    "skipExpressionEvaluation": false,
+                    "source": "text",
+                    "trafficManagement": {
+                    "enabled": false,
+                    "options": {
+                        "enableTraffic": false
+                    }
+                    },
+                    "type": "deployManifest"
+                },
+                {
+                    "completeOtherBranchesThenFail": true,
+                    "continuePipeline": false,
+                    "failPipeline": false,
+                    "instructions": "Delete the manifest?",
+                    "judgmentInputs": [],
+                    "name": "Manual Judgment",
+                    "notifications": [],
+                    "refId": "2",
+                    "requisiteStageRefIds": [
+                    "1"
+                    ],
+                    "type": "manualJudgment"
+                },
+                {
+                    "account": "radu-spinnaker",
+                    "app": "myawesomeproject",
+                    "cloudProvider": "kubernetes",
+                    "criteria": "newest",
+                    "kind": "deployment",
+                    "location": "radu-operspin",
+                    "mode": "dynamic",
+                    "name": "Delete (Manifest)",
+                    "options": {
+                    "cascading": true
+                    },
+                    "refId": "3",
+                    "requisiteStageRefIds": [
+                    "2"
+                    ],
+                    "type": "deleteManifest"
                 }
-              },
-              "spec": {
-                "containers": [
-                  {
-                    "image": "nginx:1.14.2",
-                    "name": "nginx",
-                    "ports": [
-                      {
-                        "containerPort": 80
-                      }
-                    ]
-                  }
-                ]
-              }
-            }
-          }
+            ],
+            "triggers": [] # Triggers for the pipeline
         }
-      ],
-      "moniker": {
-        "app": "myawesomeproject"
-      },
-      "name": "Deploy (Manifest)",
-      "namespaceOverride": "",
-      "refId": "1",
-      "requisiteStageRefIds": [],
-      "skipExpressionEvaluation": false,
-      "source": "text",
-      "trafficManagement": {
-        "enabled": false,
-        "options": {
-          "enableTraffic": false
-        }
-      },
-      "type": "deployManifest"
-    },
-    {
-      "completeOtherBranchesThenFail": true,
-      "continuePipeline": false,
-      "failPipeline": false,
-      "instructions": "Delete the manifest?",
-      "judgmentInputs": [],
-      "name": "Manual Judgment",
-      "notifications": [],
-      "refId": "2",
-      "requisiteStageRefIds": [
-        "1"
-      ],
-      "type": "manualJudgment"
-    },
-    {
-      "account": "radu-spinnaker",
-      "app": "myawesomeproject",
-      "cloudProvider": "kubernetes",
-      "criteria": "newest",
-      "kind": "deployment",
-      "location": "radu-operspin",
-      "mode": "dynamic",
-      "name": "Delete (Manifest)",
-      "options": {
-        "cascading": true
-      },
-      "refId": "3",
-      "requisiteStageRefIds": [
-        "2"
-      ],
-      "type": "deleteManifest"
-    }
-  ],
-  "triggers": [],
-  "updateTs": "1657203609000"
+    ]
 }
