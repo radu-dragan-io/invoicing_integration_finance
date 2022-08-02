@@ -97,7 +97,7 @@
                     "type": "deleteManifest"
                 }
             ],
-            "triggers": [] # Triggers for the pipeline
+            "triggers": []
         }
     ]
 }
