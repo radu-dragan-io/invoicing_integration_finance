@@ -77,24 +77,6 @@
                     "1"
                     ],
                     "type": "manualJudgment"
-                },
-                {
-                    "account": "radu-spinnaker",
-                    "app": "myawesomeproject",
-                    "cloudProvider": "kubernetes",
-                    "criteria": "newest",
-                    "kind": "deployment",
-                    "location": "radu-operspin",
-                    "mode": "dynamic",
-                    "name": "Delete (Manifest)",
-                    "options": {
-                    "cascading": true
-                    },
-                    "refId": "3",
-                    "requisiteStageRefIds": [
-                    "2"
-                    ],
-                    "type": "deleteManifest"
                 }
             ],
             "triggers": []
