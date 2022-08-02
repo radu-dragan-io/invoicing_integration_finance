@@ -1,8 +1,8 @@
 {
-    "application": "invoicing", 
+    "application": "invoicing_feature_integration", 
     "pipelines": [
         {
-            "application": "invoicing", 
+            "application": "invoicing_feature_integration", 
             "keepWaitingPipelines": false, 
             "limitConcurrent": true, 
             "name": "Dinghy Pipeline", 
@@ -48,7 +48,7 @@
                     }
                     ],
                     "moniker": {
-                    "app": "invoicing"
+                    "app": "invoicing_feature_integration"
                     },
                     "name": "Deploy (Manifest)",
                     "namespaceOverride": "",
