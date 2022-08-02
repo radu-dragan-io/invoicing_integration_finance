@@ -1,12 +1,12 @@
 {
-    "application": "invoicing", # Global variable
+    "application": "invoicing", 
     "pipelines": [
         {
-            "application": "invoicing", # Application where pipeline will exist
-            "keepWaitingPipelines": false, # Pipeline settings
-            "limitConcurrent": true, # Pipeline settings
-            "name": "Dinghy Pipeline", # Name of pipeline
-            "stages": [ # Stages the pipeline will have
+            "application": "invoicing", 
+            "keepWaitingPipelines": false, 
+            "limitConcurrent": true, 
+            "name": "Dinghy Pipeline", 
+            "stages": [ 
                 {
                     "account": "radu-spinnaker",
                     "cloudProvider": "kubernetes",
