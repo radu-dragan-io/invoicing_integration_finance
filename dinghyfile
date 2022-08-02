@@ -1,91 +1,103 @@
 {
-  "keepWaitingPipelines": false,
-  "lastModifiedBy": "radu-dragan-io",
-  "limitConcurrent": true,
-  "spelEvaluator": "v4",
-  "stages": [
-    {
-      "clusters": [
+    "application": "invoicing", # Global variable
+    "pipelines": [
         {
-          "account": "support-dev",
-          "application": "invoicing_integration_finance",
-          "associatePublicIpAddress": false,
-          "availabilityZones": {
-            "us-east-2": [
-              "us-east-2c"
-            ]
-          },
-          "capacity": {
-            "desired": 1,
-            "max": 1,
-            "min": 1
-          },
-          "cloudProvider": "aws",
-          "cooldown": 10,
-          "copySourceCustomBlockDeviceMappings": false,
-          "delayBeforeDisableSec": 0,
-          "delayBeforeScaleDownSec": 0,
-          "ebsOptimized": false,
-          "enabledMetrics": [
-            "GroupDesiredCapacity"
-          ],
-          "freeFormDetails": "",
-          "healthCheckGracePeriod": 600,
-          "healthCheckType": "EC2",
-          "iamRole": "BaseIAMRole",
-          "instanceMonitoring": false,
-          "instanceType": "t3.micro",
-          "keyPair": "spin-support",
-          "loadBalancers": [],
-          "maxRemainingAsgs": 2,
-          "provider": "aws",
-          "rollback": {
-            "onFailure": false
-          },
-          "scaleDown": false,
-          "securityGroups": [],
-          "spotPrice": "",
-          "stack": "",
-          "strategy": "redblack",
-          "subnetType": "deployment-test-c",
-          "suspendedProcesses": [],
-          "tags": {},
-          "targetGroups": [],
-          "targetHealthyDeployPercentage": 100,
-          "terminationPolicies": [
-            "Default"
-          ],
-          "useAmiBlockDeviceMappings": false,
-          "useSourceCapacity": false
+            "application": "invoicing", # Application where pipeline will exist
+            "keepWaitingPipelines": false, # Pipeline settings
+            "limitConcurrent": true, # Pipeline settings
+            "name": "Dinghy Pipeline", # Name of pipeline
+            "stages": [ # Stages the pipeline will have
+                {
+                    "account": "radu-spinnaker",
+                    "cloudProvider": "kubernetes",
+                    "manifests": [
+                    {
+                        "apiVersion": "apps/v1",
+                        "kind": "Deployment",
+                        "metadata": {
+                        "name": "nginx-deployment"
+                        },
+                        "spec": {
+                        "replicas": 2,
+                        "selector": {
+                            "matchLabels": {
+                            "app": "nginx"
+                            }
+                        },
+                        "template": {
+                            "metadata": {
+                            "labels": {
+                                "app": "nginx"
+                            }
+                            },
+                            "spec": {
+                            "containers": [
+                                {
+                                "image": "nginx:1.14.2",
+                                "name": "nginx",
+                                "ports": [
+                                    {
+                                    "containerPort": 80
+                                    }
+                                ]
+                                }
+                            ]
+                            }
+                        }
+                        }
+                    }
+                    ],
+                    "moniker": {
+                    "app": "invoicing"
+                    },
+                    "name": "Deploy (Manifest)",
+                    "namespaceOverride": "",
+                    "refId": "1",
+                    "requisiteStageRefIds": [],
+                    "skipExpressionEvaluation": false,
+                    "source": "text",
+                    "trafficManagement": {
+                    "enabled": false,
+                    "options": {
+                        "enableTraffic": false
+                    }
+                    },
+                    "type": "deployManifest"
+                },
+                {
+                    "completeOtherBranchesThenFail": true,
+                    "continuePipeline": false,
+                    "failPipeline": false,
+                    "instructions": "Delete the manifest?",
+                    "judgmentInputs": [],
+                    "name": "Manual Judgment",
+                    "notifications": [],
+                    "refId": "2",
+                    "requisiteStageRefIds": [
+                    "1"
+                    ],
+                    "type": "manualJudgment"
+                },
+                {
+                    "account": "radu-spinnaker",
+                    "app": "myawesomeproject",
+                    "cloudProvider": "kubernetes",
+                    "criteria": "newest",
+                    "kind": "deployment",
+                    "location": "radu-operspin",
+                    "mode": "dynamic",
+                    "name": "Delete (Manifest)",
+                    "options": {
+                    "cascading": true
+                    },
+                    "refId": "3",
+                    "requisiteStageRefIds": [
+                    "2"
+                    ],
+                    "type": "deleteManifest"
+                }
+            ],
+            "triggers": [] # Triggers for the pipeline
         }
-      ],
-      "name": "Deploy",
-      "refId": "2",
-      "requisiteStageRefIds": [
-        "3"
-      ],
-      "type": "deploy"
-    },
-    {
-      "baseAmi": "ami-0960ab670c8bb45f3",
-      "baseLabel": "release",
-      "baseOs": "ubuntu focal",
-      "cloudProviderType": "aws",
-      "extendedAttributes": {},
-      "name": "Bake",
-      "refId": "3",
-      "region": "us-east-2",
-      "regions": [
-        "us-east-2"
-      ],
-      "requisiteStageRefIds": [],
-      "skipRegionDetection": true,
-      "storeType": "ebs",
-      "type": "bake",
-      "user": "radu-dragan-io",
-      "vmType": "hvm"
-    }
-  ],
-  "triggers": [],
-  "updateTs": "1659108440000"
+    ]
 }
