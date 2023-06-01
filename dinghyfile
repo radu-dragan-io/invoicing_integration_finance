@@ -1,5 +1,28 @@
 {
-    "application": "invoicing-integration-app", 
+    "application": "invoicing-integration-app",
+    "spec": {
+      "appmetadata": {
+        "permissions": {
+          "READ": [
+            "spinnaker-dev",
+            "spinnaker-admin",
+            "spinnaker-ops",
+            "spinnaker-qa"
+          ],
+          "WRITE": [
+            "spinnaker-admin",
+            "spinnaker-ops",
+            "spinnaker-qa"
+          ],
+          "EXECUTE": [
+            "spinnaker-dev",
+            "spinnaker-admin",
+            "spinnaker-ops",
+            "spinnaker-qa"
+          ]
+        } 
+      }
+    },
     "pipelines": [
         {
             "application": "invoicing-integration-app", 
