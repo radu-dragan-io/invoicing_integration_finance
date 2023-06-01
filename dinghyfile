@@ -8,7 +8,7 @@
             "name": "Dinghy Pipeline", 
             "stages": [ 
                 {
-                    "account": "radu-spinnaker",
+                    "account": "spin-support-cluster",
                     "cloudProvider": "kubernetes",
                     "manifests": [
                     {
