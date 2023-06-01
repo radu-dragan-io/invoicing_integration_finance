@@ -89,7 +89,7 @@
                 },
                 {
                     "completeOtherBranchesThenFail": true,
-                    "continuePipeline": true,
+                    "continuePipeline": false,
                     "failPipeline": false,
                     "instructions": "Delete the manifest?",
                     "judgmentInputs": [],
