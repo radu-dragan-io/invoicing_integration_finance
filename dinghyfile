@@ -1,76 +1,83 @@
 {
     "application": "invoicing-integration-app",
     "spec": {
-      "appmetadata": {
-        "permissions": {
-          "READ": [
-            "spinnaker-dev",
-            "spinnaker-admin",
-            "spinnaker-ops",
-            "spinnaker-qa"
-          ],
-          "WRITE": [
-            "spinnaker-admin",
-            "spinnaker-ops"
-          ],
-          "EXECUTE": [
-            "spinnaker-dev",
-            "spinnaker-admin",
-            "spinnaker-ops",
-            "spinnaker-qa"
-          ]
-        } 
-      }
+        "appmetadata": {
+            "permissions": {
+                "READ": [
+                    "spinnaker-dev",
+                    "spinnaker-admin",
+                    "spinnaker-ops",
+                    "spinnaker-qa"
+                ],
+                "WRITE": [
+                    "spinnaker-dev",
+                    "spinnaker-admin",
+                    "spinnaker-ops",
+                    "spinnaker-qa"
+                ],
+                "EXECUTE": [
+                    "spinnaker-dev",
+                    "spinnaker-admin",
+                    "spinnaker-ops",
+                    "spinnaker-qa"
+                ]
+            }
+        }
     },
     "pipelines": [
         {
-            "application": "invoicing-integration-app", 
-            "keepWaitingPipelines": false, 
-            "limitConcurrent": true, 
-            "name": "Dinghy Pipeline", 
-            "stages": [ 
+            "application": "invoicing-integration-app",
+            "keepWaitingPipelines": false,
+            "limitConcurrent": true,
+            "locked": {
+                "allowUnlockUi": true,
+                "description": "",
+                "ui": true
+            },
+            "name": "Dinghy Pipeline",
+            "stages": [
                 {
                     "account": "spin-support-cluster",
                     "cloudProvider": "kubernetes",
                     "manifests": [
-                    {
-                        "apiVersion": "apps/v1",
-                        "kind": "Deployment",
-                        "metadata": {
-                        "name": "nginx-deployment"
-                        },
-                        "spec": {
-                        "replicas": 2,
-                        "selector": {
-                            "matchLabels": {
-                            "app": "nginx"
-                            }
-                        },
-                        "template": {
+                        {
+                            "apiVersion": "apps/v1",
+                            "kind": "Deployment",
                             "metadata": {
-                            "labels": {
-                                "app": "nginx"
-                            }
+                                "name": "nginx-deployment"
                             },
                             "spec": {
-                            "containers": [
-                                {
-                                "image": "nginx:1.14.2",
-                                "name": "nginx",
-                                "ports": [
-                                    {
-                                    "containerPort": 80
+                                "replicas": 2,
+                                "selector": {
+                                    "matchLabels": {
+                                        "app": "nginx"
                                     }
-                                ]
+                                },
+                                "template": {
+                                    "metadata": {
+                                        "labels": {
+                                            "app": "nginx"
+                                        }
+                                    },
+                                    "spec": {
+                                        "containers": [
+                                            {
+                                                "image": "nginx:1.14.2",
+                                                "name": "nginx",
+                                                "ports": [
+                                                    {
+                                                        "containerPort": 80
+                                                    }
+                                                ]
+                                            }
+                                        ]
+                                    }
                                 }
-                            ]
                             }
                         }
-                        }
-                    }
                     ],
                     "moniker": {
-                    "app": "invoicing-integration-app"
+                        "app": "invoicing-integration-app"
                     },
                     "name": "Deploy (Manifest)",
                     "namespaceOverride": "",
@@ -79,16 +86,16 @@
                     "skipExpressionEvaluation": false,
                     "source": "text",
                     "trafficManagement": {
-                    "enabled": false,
-                    "options": {
-                        "enableTraffic": false
-                    }
+                        "enabled": false,
+                        "options": {
+                            "enableTraffic": false
+                        }
                     },
                     "type": "deployManifest"
                 },
                 {
                     "completeOtherBranchesThenFail": true,
-                    "continuePipeline": false,
+                    "continuePipeline": true,
                     "failPipeline": false,
                     "instructions": "Delete the manifest?",
                     "judgmentInputs": [],
@@ -96,7 +103,7 @@
                     "notifications": [],
                     "refId": "2",
                     "requisiteStageRefIds": [
-                    "1"
+                        "1"
                     ],
                     "type": "manualJudgment"
                 }
