@@ -92,20 +92,6 @@
                         }
                     },
                     "type": "deployManifest"
-                },
-                {
-                    "completeOtherBranchesThenFail": true,
-                    "continuePipeline": true,
-                    "failPipeline": false,
-                    "instructions": "Delete the manifest now?",
-                    "judgmentInputs": [],
-                    "name": "Manual Judgment",
-                    "notifications": [],
-                    "refId": "2",
-                    "requisiteStageRefIds": [
-                        "1"
-                    ],
-                    "type": "manualJudgment"
                 }
             ],
             "triggers": []
