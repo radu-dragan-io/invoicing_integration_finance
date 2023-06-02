@@ -97,7 +97,7 @@
                     "completeOtherBranchesThenFail": true,
                     "continuePipeline": true,
                     "failPipeline": false,
-                    "instructions": "Delete the manifest?",
+                    "instructions": "Delete the manifest now?",
                     "judgmentInputs": [],
                     "name": "Manual Judgment",
                     "notifications": [],
