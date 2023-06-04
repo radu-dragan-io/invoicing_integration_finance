@@ -36,7 +36,77 @@
             },
             "name": "Dinghy Pipeline",
             "stages": [
-                {{ module "wait.stage.module" }}
+                {
+                    "account": "spin-support-cluster",
+                    "cloudProvider": "kubernetes",
+                    "manifests": [
+                        {
+                            "apiVersion": "apps/v1",
+                            "kind": "Deployment",
+                            "metadata": {
+                                "name": "nginx-deployment"
+                            },
+                            "spec": {
+                                "replicas": 2,
+                                "selector": {
+                                    "matchLabels": {
+                                        "app": "nginx"
+                                    }
+                                },
+                                "template": {
+                                    "metadata": {
+                                        "labels": {
+                                            "app": "nginx"
+                                        }
+                                    },
+                                    "spec": {
+                                        "containers": [
+                                            {
+                                                "image": "nginx:1.14.2",
+                                                "name": "nginx",
+                                                "ports": [
+                                                    {
+                                                        "containerPort": 80
+                                                    }
+                                                ]
+                                            }
+                                        ]
+                                    }
+                                }
+                            }
+                        }
+                    ],
+                    "moniker": {
+                        "app": "invoicing-integration-app"
+                    },
+                    "name": "Deploy (Manifest)",
+                    "namespaceOverride": "",
+                    "refId": "1",
+                    "requisiteStageRefIds": [],
+                    "skipExpressionEvaluation": false,
+                    "source": "text",
+                    "trafficManagement": {
+                        "enabled": false,
+                        "options": {
+                            "enableTraffic": false
+                        }
+                    },
+                    "type": "deployManifest"
+                },
+                {
+                    "completeOtherBranchesThenFail": true,
+                    "continuePipeline": true,
+                    "failPipeline": false,
+                    "instructions": "Delete the manifest?",
+                    "judgmentInputs": [],
+                    "name": "Manual Judgment",
+                    "notifications": [],
+                    "refId": "2",
+                    "requisiteStageRefIds": [
+                        "1"
+                    ],
+                    "type": "manualJudgment"
+                }
             ],
             "triggers": []
         }
