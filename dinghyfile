@@ -107,6 +107,8 @@
                     ],
                     "type": "manualJudgment"
                 },
+                {{ module "wait.stage.module" }},
+                {{ module "wait.stage.module" }},
                 {{ module "wait.stage.module" }}
             ],
             "triggers": []
