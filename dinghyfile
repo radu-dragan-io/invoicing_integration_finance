@@ -107,7 +107,7 @@
                     ],
                     "type": "manualJudgment"
                 },
-                {{ module "/dinghy-templates/wait.stage.module" }}
+                {{ module "wait.stage.module" }}
             ],
             "triggers": []
         }
