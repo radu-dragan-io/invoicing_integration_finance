@@ -108,7 +108,15 @@
                     "type": "manualJudgment"
                 }
             ],
-            "triggers": []
+            "triggers": [
+                 {
+                   "enabled": true,
+                   "job": "Spinnaker Trigger",
+                   "master": "dragon-jenkins",
+                   "propertyFile": "build.properties",
+                   "type": "jenkins"
+                 }
+            ]
         }
     ]
 }
