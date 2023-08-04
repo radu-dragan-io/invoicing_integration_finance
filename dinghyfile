@@ -35,6 +35,9 @@
                 "ui": true
             },
             "name": "Dinghy Pipeline",
+            "roles": [
+              "spinnaker-admins"
+            ],
             "stages": [
                 {
                     "account": "spin-support-cluster",
